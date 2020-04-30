@@ -283,7 +283,7 @@ if __name__ == "__main__":
 
     # Read the input image
     original = cv2.imread("data/original0.png")
-    #original = cv2.resize(original, None, fx=0.25, fy=0.25)
+    #original = cv2.resize(original, None, fx=0.0625, fy=0.0525)
     original = cv2.split(cv2.cvtColor(original, cv2.COLOR_BGR2YCR_CB))[0]
     original = original.astype(np.float32) / 255
     dim = np.array([original.shape[1], original.shape[0]])
