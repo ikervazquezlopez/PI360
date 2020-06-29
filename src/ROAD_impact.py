@@ -50,6 +50,11 @@ def ROAD_3x3(img, out, dim):
             for i in range(0, ROAD_SIZE):
                 ROAD = ROAD + mem[i]
             out[ty,tx] = ROAD
+
+            # Erase all mem data
+            for i in range(0,KERNEL_SIZE*KERNEL_SIZE):
+                mem[i] = 0
+
             tx = tx + cuda.blockDim.x
         tx = cuda.threadIdx.x
         ty = ty + cuda.blockDim.x
@@ -90,7 +95,7 @@ if __name__ == '__main__':
     d_diff = cuda.to_device(np.ascontiguousarray(img), stream=stream)
 
     # Compute ROAD metric for the image
-    ROAD_3x3[512,512](d_diff, d_out, d_dim)
+    ROAD_3x3[1024,1024](d_diff, d_out, d_dim)
 
     # Copy results to CPU (host)
     h_road = d_out.copy_to_host()
