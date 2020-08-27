@@ -10,6 +10,14 @@ from mpl_toolkits.mplot3d import Axes3D
 
 
 def plot_results(mse):
+    
+    plt.imshow(mse, cmap='inferno',interpolation="bilinear", aspect='auto')
+    plt.colorbar()
+    plt.xlabel("Interpolation length")
+    plt.ylabel("Image row")
+    plt.xticks(list(range(mse.shape[1], 0, -1)), labels=list(range(mse.shape[1]*2, 0, -2)))
+    plt.title("MSE")
+    """
     fig = plt.figure()
     ax = fig.gca(projection='3d')
     x = np.array(list(range(0, mse.shape[1])))
@@ -22,7 +30,8 @@ def plot_results(mse):
 
     ax.set_ylabel("Image row")
     ax.set_zlabel("MSE")
-    plt.savefig("MSE_impact_500.png")
+    """
+    plt.savefig("plot_results/MSE_impact.png")
 
 
 if __name__ == '__main__':
@@ -44,4 +53,4 @@ if __name__ == '__main__':
 
     mse = mse / len(onlyfilespaths)
 
-    plot_results(mse)
+    plot_results(mse[:,2:])

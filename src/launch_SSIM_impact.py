@@ -18,7 +18,7 @@ if __name__ == '__main__':
     in_dir = sys.argv[1]
     out_dir = sys.argv[2]
 
-    with get_context("spawn").Pool(mp.cpu_count()-2) as pool:
+    with get_context("spawn").Pool(15) as pool:
 
         onlyfilespaths = [f for f in listdir(in_dir) if isfile(join(in_dir, f))]
 

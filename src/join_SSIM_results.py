@@ -10,6 +10,13 @@ from mpl_toolkits.mplot3d import Axes3D
 
 
 def plot_results(SSIM):
+    plt.imshow(SSIM, cmap='inferno',interpolation="bilinear", aspect='auto')
+    plt.colorbar()
+    plt.xlabel("Interpolation length")
+    plt.ylabel("Image row")
+    plt.xticks(list(range(SSIM.shape[1], 0, -1)), labels=list(range(SSIM.shape[1]*2, 0, -2)))
+    plt.title("SSIM")
+    """
     fig = plt.figure()
     ax = fig.gca(projection='3d')
     x = np.array(list(range(0, SSIM.shape[1])))
@@ -19,10 +26,12 @@ def plot_results(SSIM):
     ax.plot_surface(y, np.flip(x), SSIM)
     ax.set_ylabel("Interpolation length")
     ax.set_yticklabels(list(range(SSIM.shape[1], 0, -1)))
+    Axes3D.set_zlim(ax, bottom=0,top=1.1)
 
     ax.set_xlabel("Image row")
     ax.set_zlabel("SSIM")
-    plt.savefig("SSIM_impact_500.png")
+    """
+    plt.savefig("plot_results/SSIM_impact.png")
 
 def plot_SSIM_in_lines(SSIM):
 
@@ -33,15 +42,16 @@ def plot_SSIM_in_lines(SSIM):
     line_last = SSIM[last_row,:]
     x = np.array(list(range(0, SSIM.shape[1])))
     fig, ax = plt.subplots()
-    ax.plot(x, line_0, 'r--', label="Row 0")
-    ax.plot(x, line_half, 'b--', label="Row {}".format(half_row))
-    ax.plot(x, line_last, 'g--', label="Row {}".format(last_row))
+    ax.plot(x, line_0, 'bo', label="Row 0")
+    ax.plot(x, line_half, 'r--', label="Row {}".format(half_row))
+    ax.plot(x, line_last, 'c--', label="Row {}".format(last_row))
+    ax.set_ylim(bottom=0,top=1.1)
     ax.set_xlabel("Interpolation length")
     ax.set_ylabel("SSIM")
 
-    legend = ax.legend(loc='upper center')
-    legend.get_frame().set_facecolor('C0')
-    plt.savefig("SSIM_impact_500_per_line.png")
+    legend = ax.legend(loc='lower right')
+    #legend.get_frame().set_facecolor('C1')
+    plt.savefig("plot_results/SSIM_impact_per_line.png")
 
 
 if __name__ == "__main__":
@@ -61,6 +71,6 @@ if __name__ == "__main__":
         f.close()
 
     SSIM_results = SSIM_results / len(onlyfilespaths)
-
+    SSIM_results = SSIM_results[:,1:]
     plot_results(SSIM_results)
     plot_SSIM_in_lines(SSIM_results)

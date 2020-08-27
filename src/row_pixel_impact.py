@@ -260,6 +260,8 @@ if __name__ == "__main__":
 
     interpolate_image[512,512](d_original, d_p, d_dim, d_interpolated)
 
+
+""" FOR PSNR
     # Compute image squared error original-interpolated
     d_squared_error = cuda.to_device(np.ascontiguousarray(template), stream=stream)
     image_squared_error[512,512](d_original, d_interpolated, d_dim, d_squared_error)
@@ -285,6 +287,7 @@ if __name__ == "__main__":
     cv2.imwrite("interpolated.png", interpolated*255)
 
 """
+
     # Create the image means in the GPU
     ori_mean_img = np.full(original.shape, np.mean(original), original.dtype)
     d_ori_mean_img = cuda.to_device(np.ascontiguousarray(ori_mean_img), stream=stream)
@@ -360,4 +363,3 @@ if __name__ == "__main__":
     print("Mean: " + str(np.mean(diff)))
     print("Min: " + str(np.min(diff)), "  Max: " + str(np.max(diff)))
     #cv2.imwrite("means.png", mmeans*255)
-"""
